@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": ["../src/index.ts"],
-  "sourcesContent": ["import { isObject } from \"@vue/shared\";\r\n\r\nexport const reactive = () => {\r\n\r\n}\r\n\r\nexport const effect = () => {\r\n\r\n}\r\n\r\n\r\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAEO,MAAM,WAAW,MAAM;AAAA,EAE9B;AAEO,MAAM,SAAS,MAAM;AAAA,EAE5B;",
-  "names": []
+  "sources": ["../src/index.ts", "../src/effect.ts", "../../shared/src/index.ts", "../src/reactive.ts"],
+  "sourcesContent": ["export { effect } from './effect'\r\nexport { reactive } from './reactive'\r\n\r\n\r\n\r\n", "export function effect() { }", "export const isObject = (value: any) => {\r\n    return typeof value === 'object' && value !== null\r\n}", "import { isObject } from \"@vue/shared\";\r\n\r\n//\u5C06\u6570\u636E\u8F6C\u5316\u4E3A\u54CD\u5E94\u5F0F\u6570\u636E\r\nexport function reactive(target) {\r\n    if (!isObject(target)) {\r\n        return\r\n    }\r\n\r\n    const proxy = new Proxy(target, {\r\n        get(target, key, receiver) {\r\n\r\n            console.log('%c\u29ED', 'color: #e50000', 'getvalue');\r\n            // \u601D\u8003:\u4E3A\u4EC0\u4E48\u4E0D\u7528 return target[key]\r\n            return Reflect.get(target, key, receiver)\r\n        },\r\n        set(target, key, value, receiver) {\r\n            console.log('%c\u29ED', 'color: #733d00', 'setvalue');\r\n            Reflect.set(target, key, value)\r\n            return true\r\n        }\r\n    })\r\n\r\n    return proxy\r\n\r\n}\r\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAO,WAAS,SAAS;AAAA,EAAE;;;ACApB,MAAM,WAAW,CAAC,UAAe;AACpC,WAAO,OAAO,UAAU,YAAY,UAAU;AAAA,EAClD;;;ACCO,WAAS,SAAS,QAAQ;AAC7B,QAAI,CAAC,SAAS,MAAM,GAAG;AACnB;AAAA,IACJ;AAEA,UAAM,QAAQ,IAAI,MAAM,QAAQ;AAAA,MAC5B,IAAIA,SAAQ,KAAK,UAAU;AAEvB,gBAAQ,IAAI,YAAO,kBAAkB,UAAU;AAE/C,eAAO,QAAQ,IAAIA,SAAQ,KAAK,QAAQ;AAAA,MAC5C;AAAA,MACA,IAAIA,SAAQ,KAAK,OAAO,UAAU;AAC9B,gBAAQ,IAAI,YAAO,kBAAkB,UAAU;AAC/C,gBAAQ,IAAIA,SAAQ,KAAK,KAAK;AAC9B,eAAO;AAAA,MACX;AAAA,IACJ,CAAC;AAED,WAAO;AAAA,EAEX;",
+  "names": ["target"]
 }

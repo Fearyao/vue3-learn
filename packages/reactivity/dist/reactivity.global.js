@@ -23,10 +23,34 @@ var VueReactivity = (() => {
     effect: () => effect,
     reactive: () => reactive
   });
-  var reactive = () => {
+
+  // packages/reactivity/src/effect.ts
+  function effect() {
+  }
+
+  // packages/shared/src/index.ts
+  var isObject = (value) => {
+    return typeof value === "object" && value !== null;
   };
-  var effect = () => {
-  };
+
+  // packages/reactivity/src/reactive.ts
+  function reactive(target) {
+    if (!isObject(target)) {
+      return;
+    }
+    const proxy = new Proxy(target, {
+      get(target2, key, receiver) {
+        console.log("%c\u29ED", "color: #e50000", "getvalue");
+        return Reflect.get(target2, key, receiver);
+      },
+      set(target2, key, value, receiver) {
+        console.log("%c\u29ED", "color: #733d00", "setvalue");
+        Reflect.set(target2, key, value);
+        return true;
+      }
+    });
+    return proxy;
+  }
   return __toCommonJS(src_exports);
 })();
 //# sourceMappingURL=reactivity.global.js.map
