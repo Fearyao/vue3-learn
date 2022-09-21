@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourcesContent": ["import { isObject } from \"@vue/shared\";\r\n\r\nexport const reactive = () => {\r\n\r\n}\r\n\r\nexport const effect = () => {\r\n\r\n}\r\n\r\n\r\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAEO,MAAM,WAAW,MAAM;AAAA,EAE9B;AAEO,MAAM,SAAS,MAAM;AAAA,EAE5B;",
+  "names": []
+}
