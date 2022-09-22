@@ -1,25 +1,27 @@
 import { isObject } from "@vue/shared";
+import { mutableHandlers, ReactiveFlags } from "./baseHandles";
+
+
 
 //将数据转化为响应式数据
+export const reactiveMap = new WeakMap() //WeakMap key只能是对象
+
 export function reactive(target) {
     if (!isObject(target)) {
         return
     }
 
-    const proxy = new Proxy(target, {
-        get(target, key, receiver) {
+    if (target[ReactiveFlags.IS_REACTIVE]) {
+        return target
+    }
 
-            console.log('%c⧭', 'color: #e50000', 'getvalue');
-            // 思考:为什么不用 return target[key]
-            return Reflect.get(target, key, receiver)
-        },
-        set(target, key, value, receiver) {
-            console.log('%c⧭', 'color: #733d00', 'setvalue');
-            Reflect.set(target, key, value)
-            return true
-        }
-    })
+    const exisitingProxy = reactiveMap.get(target)
+    if (exisitingProxy) {
+        return exisitingProxy
+    }
+
+    const proxy = new Proxy(target, mutableHandlers)
+    reactiveMap.set(target, proxy)
 
     return proxy
-
 }
