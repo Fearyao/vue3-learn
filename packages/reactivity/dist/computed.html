@@ -24,27 +24,26 @@
             }
         })
 
-        let runner = effect(() => {
-            document.getElementById('app').innerHTML = `${data.name} is ${data.age} years old borned in ${data.address.name}`
-        }, {
-            scheduler() {
-                console.log('%c⧭', 'color: #aa00ff', 'run');
-                runner()
+
+        //计算属性有一个缓存表示 属性变化需要重新执行get 没有变化不需要执行get
+
+
+        const fullString = computed({
+            get() {
+                return `${data.name} is ${data.age} years old`
+            },
+            set(val) {
+                console.log('%c⧭', 'color: #733d00', val);
             }
         })
 
-        data.age = 17
-        data.age = 18
+        effect(() => {
+            document.getElementById('app').innerHtml = fullString.value
+        })
 
-
-        console.log('%c⧭', 'color: #e50000', data.address);
-        data.address.name = 'HZ'
-
-
-
-
-
-
+        setTimeout(() => {
+            data.age = 17
+        })
     </script>
 
 </body>

@@ -1,4 +1,6 @@
+import { isObject } from "@vue/shared"
 import { activeEffect, track, trigger } from "./effect"
+import { reactive } from "./reactive"
 
 export const enum ReactiveFlags {
     IS_REACTIVE = '__v_isReactive'
@@ -12,7 +14,13 @@ export const mutableHandlers = {
         track(target, 'get', key)
 
         // 思考:为什么不用 return target[key]
-        return Reflect.get(target, key, receiver)
+        let res = Reflect.get(target, key, receiver)
+
+        if (isObject(res)) { //取值发现是object  继续代理 相比vue2 直接递归遍历代理 性能更好
+            return reactive(res)
+        }
+
+        return res
     },
     set(target, key, value, receiver) {
         let oldValue = target[key]
